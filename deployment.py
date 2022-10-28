@@ -23,4 +23,4 @@ def copy_files_to_deployment_dir():
 
 
 if __name__ == "__main__":
-    store_model_into_pickle()
+    copy_files_to_deployment_dir()
