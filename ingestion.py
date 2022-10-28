@@ -5,7 +5,7 @@ import json
 from datetime import datetime
 import glob
 
-#############Load config.json and get input and output paths
+# Load config.json and get input and output paths
 with open('config.json', 'r') as f:
     config = json.load(f)
 
@@ -16,7 +16,7 @@ path = os.path.join(os.getcwd(), input_folder_path)
 csv_files = glob.glob(os.path.join(path, "*.csv"))
 
 
-#############Function for data ingestion
+# Function for data ingestion
 
 def merge_multiple_dataframe():
     """Merge csv files into one dataframe and save it as csv file"""
