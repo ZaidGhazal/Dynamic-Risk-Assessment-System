@@ -33,8 +33,13 @@ def merge_multiple_dataframe():
         data = pd.concat([data, temp_df])
 
     files_ls = [os.path.basename(file) for file in files_ls]
+    print(files_ls)
     with open(os.path.join(output_folder_path, "ingestedfiles.txt"), "a") as txt:
-        txt.write('\n'.join(files_ls))
+        for filename in files_ls:
+            now = datetime.now()
+            date_time = now.strftime("%m/%d/%Y, %H:%M:%S")
+            txt.write(f'{date_time} --> {filename}')
+            txt.write("\n")
 
     data.drop_duplicates(inplace=True, ignore_index=True)
     saving_path = os.path.join(output_folder_path, "finaldata.csv")
