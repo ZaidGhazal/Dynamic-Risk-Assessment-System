@@ -16,7 +16,7 @@ test_set_path = join(config["test_data_path"], "testdata.csv")
 
 
 # Function for reporting
-def score_model():
+def confusion_matrix():
     """ calculate a confusion matrix using the test data and the deployed model &
     write the confusion matrix to the workspace"""
 
@@ -34,4 +34,4 @@ def score_model():
 
 
 if __name__ == '__main__':
-    score_model()
+    confusion_matrix()

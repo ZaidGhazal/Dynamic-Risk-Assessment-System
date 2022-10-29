@@ -18,17 +18,18 @@ data = {"data_path": test_data_path}
 # Call each API endpoint and store the responses
 response1 = requests.post(URL + "/prediction", json=data).json()
 print("SUCESS: 1st API Called")
+
 response2 = requests.get(URL + "/scoring").json()
 print("SUCESS: 2nd API Called")
 
 response3 = requests.get(URL + "/summarystats").json()
 print("SUCESS: 3rd API Called")
 
-# response4 =  requests.get(URL + "/diagnostics")
+response4 =  requests.get(URL + "/diagnostics").json()
 print("SUCESS: 4th API Called")
 
 # combine all API responses
-responses = {**response1, **response2, **response3}
+responses = {**response1, **response2, **response3, **response4}
 del responses["detail"]
 
 # write the responses to your workspace

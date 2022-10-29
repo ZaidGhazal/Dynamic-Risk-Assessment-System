@@ -19,15 +19,16 @@ def get_f1score(y_true: np.ndarray, y_pred: np.ndarray) -> float:
 
 
 # Function for model scoring
-def score_model():
+def score_model(test_data: pd.DataFrame = None):
     """
     This function takes a trained model, load test data, and calculate an F1 score for the model relative to the test data
     it writes the result to the latestscore.txt file
     """
-    test_path = join(test_data_dir, "testdata.csv")
     model_path = join(model_dir, "trainedmodel.pkl")
-
-    test_data = pd.read_csv(test_path)
+    if test_data is not pd.DataFrame:
+        test_path = join(test_data_dir, "testdata.csv")
+        test_data = pd.read_csv(test_path)
+    
     X_test = test_data.drop(columns=["corporation", "exited"])
     y_test = test_data["exited"]
 
@@ -39,7 +40,7 @@ def score_model():
     save_path = join(model_dir, "latestscore.txt")
 
     with open(save_path, "w") as txt:
-        txt.write(f1Score)
+        txt.write(str(f1Score))
 
     return f1Score
 

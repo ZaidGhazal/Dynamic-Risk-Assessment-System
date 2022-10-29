@@ -30,6 +30,7 @@ def merge_multiple_dataframe():
         temp_df = pd.read_csv(file)
         data = pd.concat([data, temp_df])
 
+
     files_ls = [os.path.basename(file) for file in files_ls]
     with open(os.path.join(output_folder_path, "ingestedfiles.txt"), "a") as txt:
         for filename in files_ls:

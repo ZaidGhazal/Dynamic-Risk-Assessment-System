@@ -1,8 +1,11 @@
 
 from ingestion import merge_multiple_dataframe
 from diagnostics import model_predictions
-from scoring import get_f1score
+from scoring import score_model
+from training import train_model
+from deployment import copy_files_to_deployment_dir
 import pandas as pd
+import subprocess
 from os.path import join, basename
 import json
 import glob
@@ -48,13 +51,17 @@ data_dir = config["output_folder_path"]
 data_path = join(data_dir, "finaldata.csv")
 
 data = pd.read_csv(data_path)
-predictions = model_predictions(data)
-y_true = data["exited"]
-new_score = get_f1score(y_true, predictions)
+new_score = score_model(data)
+print(f"score {new_score}")
 
-print(new_score)
-print(old_score)
+if new_score < old_score:
+    train_model()
+    copy_files_to_deployment_dir()
+else:
+    sys.exit()
 
+subprocess.call(["python", "-m", "reporting"])
+subprocess.call(["python", "apicalls.py"])
 
 
 
