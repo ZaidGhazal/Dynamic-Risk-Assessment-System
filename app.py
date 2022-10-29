@@ -27,14 +27,14 @@ def predict(data_path: str) -> Dict:
     Returns
     -------
      Response dictionary containing predictions
-    """    
+    """
 
     # Read in data
     data = pd.read_csv(data_path)
     predictions = model_predictions(data)
 
     response = {"predictions": predictions}
-    return  response
+    return response
 
 
 # Scoring Endpoint
@@ -43,7 +43,7 @@ def stats():
     # check the score of the deployed model
     score = score_model()
     response = {"score": score}
-    return  response
+    return response
 
 
 # Summary Statistics Endpoint
@@ -52,7 +52,7 @@ def stats():
     # check means, medians, and modes for each column
     data_stats = dataframe_summary()
     response = {"data_summerystats_[mean,median,std]": data_stats}
-    return  response
+    return response
 
 # Diagnostics Endpoint
 
@@ -64,7 +64,10 @@ def stats():
     timing = execution_time()
     packages_info = outdated_packages_list()
 
-    response = {"missing_percentags": missing_precentages, "timing_[ingestion,training]": timing, "dependancies_info": packages_info}
+    response = {
+        "missing_percentags": missing_precentages,
+        "timing_[ingestion,training]": timing,
+        "dependancies_info": packages_info}
 
     return response
 

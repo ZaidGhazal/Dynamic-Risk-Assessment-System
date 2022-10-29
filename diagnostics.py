@@ -25,10 +25,10 @@ def model_predictions(data: pd.DataFrame) -> np.ndarray:
     X = data.drop(columns=["corporation", "exited"])
 
     model_path = os.path.join(deployment_dir, "trainedmodel.pkl")
-    
+
     model = load(open(model_path, "rb"))
     preds = model.predict(X).tolist()
-    
+
     # return value should be a list containing all predictions
     return preds
 
