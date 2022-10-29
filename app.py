@@ -1,56 +1,73 @@
-from flask import Flask, session, jsonify, request
-import pandas as pd
-import numpy as np
-import pickle
-import create_prediction_model
-import diagnosis
-import predict_exited_from_saved_model
+from fastapi import FastAPI
+import subprocess
+
+from typing import Dict, List
+from diagnostics import model_predictions, dataframe_summary, missing_data_percent, execution_time, outdated_packages_list
+from scoring import score_model
 import json
-import os
 
 
 # Set up variables for use in our script
-app = Flask(__name__)
-app.secret_key = '1652d576-484a-49fd-913a-6879acfa6ba4'
+app = FastAPI()
 
 with open('config.json', 'r') as f:
     config = json.load(f)
 
-dataset_csv_path = os.path.join(config['output_folder_path'])
-
-prediction_model = None
-
 
 # Prediction Endpoint
-@app.route("/prediction", methods=['POST', 'OPTIONS'])
-def predict():
-    # call the prediction function you created in Step 3
-    return  # add return value for prediction outputs
+@app.post("/prediction")
+def predict(data_path: str) -> Dict:
+    """Return predictions given the data file
+
+    Parameters
+    ----------
+    data_path : str
+        Data file path
+
+    Returns
+    -------
+     Response dictionary containing predictions
+    """    
+
+    # Read in data
+    data = pd.read_csv(data_path)
+    predictions = model_predictions(data)
+
+    response = {"predictions": predictions}
+    return  response
+
 
 # Scoring Endpoint
-
-
-@app.route("/scoring", methods=['GET', 'OPTIONS'])
+@app.get("/scoring")
 def stats():
     # check the score of the deployed model
-    return  # add return value (a single F1 score number)
+    score = score_model()
+    response = {"score": score}
+    return  response
+
 
 # Summary Statistics Endpoint
-
-
-@app.route("/summarystats", methods=['GET', 'OPTIONS'])
+@app.get("/summarystats")
 def stats():
     # check means, medians, and modes for each column
-    return  # return a list of all calculated summary statistics
+    data_stats = dataframe_summary()
+    response = {"data_summerystats_[mean,median,std]": data_stats}
+    return  response
 
 # Diagnostics Endpoint
 
 
-@app.route("/diagnostics", methods=['GET', 'OPTIONS'])
+@app.get("/diagnostics")
 def stats():
     # check timing and percent NA values
-    return  # add return value for all diagnostics
+    missing_precentages = missing_data_percent()
+    timing = execution_time()
+    packages_info = outdated_packages_list()
+
+    response = {"missing_percentags": missing_precentages, "timing_[ingestion,training]": timing, "dependancies_info": packages_info}
+
+    return response
 
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=8000, debug=True, threaded=True)
+    subprocess.call(["uvicorn", "app:app", "--reload"])

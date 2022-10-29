@@ -14,7 +14,6 @@ with open('config.json', 'r') as f:
 
 deployment_dir = os.path.join(config['prod_deployment_path'])
 dataset_csv_dir = os.path.join(config['output_folder_path'])
-test_data_path = os.path.join(config['test_data_path'])
 
 
 # get model predictions
@@ -26,9 +25,10 @@ def model_predictions(data: pd.DataFrame) -> np.ndarray:
     X = data.drop(columns=["corporation", "exited"])
 
     model_path = os.path.join(deployment_dir, "trainedmodel.pkl")
+    
     model = load(open(model_path, "rb"))
-    preds = model.predict(X)
-
+    preds = model.predict(X).tolist()
+    
     # return value should be a list containing all predictions
     return preds
 
@@ -130,6 +130,7 @@ def outdated_packages_list():
         dep_df.loc[len(dep_df.index)] = [name, curr_version, latest_version]
 
     print(dep_df)
+    return dep_df
 
 
 # if __name__ == '__main__':

@@ -37,6 +37,8 @@ def score_model():
     with open(save_path, "w") as txt:
         date_time = datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
         txt.write(f"{date_time} --> F1-Score: {f1Score}")
+    
+    return f1Score
 
 
 if __name__ == '__main__':
