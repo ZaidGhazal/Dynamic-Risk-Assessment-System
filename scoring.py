@@ -3,7 +3,6 @@ import numpy as np
 from pickle import load
 from sklearn.metrics import f1_score
 from os.path import join
-from datetime import datetime
 import json
 
 # Load config.json and get path variables
@@ -12,6 +11,11 @@ with open('config.json', 'r') as f:
 
 model_dir = join(config['output_model_path'])
 test_data_dir = join(config['test_data_path'])
+
+def get_f1score(y_true: np.ndarray, y_pred: np.ndarray) -> float:
+    """Get F1 score using the given data"""
+    f1Score = np.round(f1_score(y_true, y_pred), 4)
+    return f1Score
 
 
 # Function for model scoring
@@ -30,13 +34,12 @@ def score_model():
     model = load(open(model_path, "rb"))
     preds = model.predict(X_test)
 
-    f1Score = np.round(f1_score(y_test, preds), 4)
+    f1Score = get_f1score(y_test, preds)
 
     save_path = join(model_dir, "latestscore.txt")
 
     with open(save_path, "w") as txt:
-        date_time = datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
-        txt.write(f"{date_time} --> F1-Score: {f1Score}")
+        txt.write(f1Score)
 
     return f1Score
 

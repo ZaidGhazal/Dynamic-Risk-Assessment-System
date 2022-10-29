@@ -1,7 +1,6 @@
 import pandas as pd
 import os
 import json
-from datetime import datetime
 import glob
 
 # Load config.json and get input and output paths
@@ -34,9 +33,7 @@ def merge_multiple_dataframe():
     files_ls = [os.path.basename(file) for file in files_ls]
     with open(os.path.join(output_folder_path, "ingestedfiles.txt"), "a") as txt:
         for filename in files_ls:
-            now = datetime.now()
-            date_time = now.strftime("%m/%d/%Y, %H:%M:%S")
-            txt.write(f'{date_time} --> {filename}')
+            txt.write(filename)
             txt.write("\n")
 
     data.drop_duplicates(inplace=True, ignore_index=True)

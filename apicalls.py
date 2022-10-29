@@ -30,7 +30,6 @@ print("SUCESS: 4th API Called")
 # combine all API responses
 responses = {**response1, **response2, **response3}
 del responses["detail"]
-print(responses)
 
 # write the responses to your workspace
 file_path = join(model_dir, "apireturns.txt")
