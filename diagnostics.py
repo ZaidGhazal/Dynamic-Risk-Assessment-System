@@ -21,11 +21,9 @@ test_data_path = os.path.join(config['test_data_path'])
 def model_predictions(data: pd.DataFrame) -> np.ndarray:
     """
     read the deployed model and a test dataset, calculate predictions
-
     """
 
     X = data.drop(columns=["corporation", "exited"])
-    y = data["exited"]
 
     model_path = os.path.join(deployment_dir, "trainedmodel.pkl")
     model = load(open(model_path, "rb"))
