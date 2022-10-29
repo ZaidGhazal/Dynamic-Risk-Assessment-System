@@ -20,7 +20,7 @@ test_data_path = os.path.join(config['test_data_path'])
 # get model predictions
 def model_predictions(data: pd.DataFrame) -> np.ndarray:
     """
-    read the deployed model and a test dataset, calculate predictions
+    Read the deployed model and a test dataset, calculate predictions
     """
 
     X = data.drop(columns=["corporation", "exited"])
@@ -35,7 +35,7 @@ def model_predictions(data: pd.DataFrame) -> np.ndarray:
 
 # Function to get summary statistics
 def dataframe_summary() -> List:
-    """calculate summary statistics for each column in the ingested dataset"""
+    """Calculate summary statistics for each column in the ingested dataset"""
 
     data = pd.read_csv(os.path.join(dataset_csv_dir, "finaldata.csv"))
     data = data.select_dtypes(include=np.number)
@@ -61,7 +61,7 @@ def missing_data_percent() -> List:
 # Function to get timings
 def execution_time() -> List:
     """
-    calculate timing of training.py and ingestion.py
+    Calculate timing of training.py and ingestion.py
     """
     timing_list = []
 
