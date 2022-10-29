@@ -1,12 +1,11 @@
-from __future__ import annotations
 import pandas as pd
 from diagnostics import model_predictions
 from sklearn import metrics
 import matplotlib.pyplot as plt
 import json
-from os.path import join 
+from os.path import join
 import warnings
-warnings.filterwarnings("ignore") 
+warnings.filterwarnings("ignore")
 
 # Load config.json and get path variables
 with open('config.json', 'r') as f:
@@ -32,10 +31,6 @@ def score_model():
     disp.plot()
     plt.title('Results Confusion Matrix')
     plt.savefig(join(model_dir, 'confusionmatrix.png'))
-
-
-
-
 
 
 if __name__ == '__main__':
