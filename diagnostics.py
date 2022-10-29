@@ -134,9 +134,9 @@ def outdated_packages_list():
 
 
 # if __name__ == '__main__':
-    # model_predictions()
-    # print(dataframe_summary())
-    # print("---------------")
-    # print(missing_data_percent())
-    # print(execution_time())
-    # outdated_packages_list()
+#     model_predictions()
+#     print(dataframe_summary())
+#     print("---------------")
+#     print(missing_data_percent())
+#     print(execution_time())
+#     outdated_packages_list()
